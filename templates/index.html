@@ -1,21 +1,56 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>💬 Chat App</title>
-  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
-  <script src="/static/script.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat App</title>
+
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Socket.IO -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 </head>
-<body class="bg-gray-900 text-white flex flex-col items-center h-screen justify-center">
-  <div class="bg-gray-800 rounded-xl shadow-2xl w-1/2 p-6">
-    <h1 class="text-3xl font-bold mb-4 text-center">💬 Chat LAN/Web</h1>
-    <div id="messages" class="h-80 overflow-y-auto border border-gray-700 rounded-lg p-3 bg-gray-900 mb-3"></div>
-    <div class="flex">
-      <input id="message" type="text" placeholder="Nhập tin nhắn..."
-             class="flex-grow p-2 rounded-l-lg text-black focus:outline-none" />
-      <button id="send" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-lg">Gửi</button>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+
+    <div class="bg-gray-800 rounded-2xl shadow-2xl w-[400px] p-5">
+        <h1 class="text-white text-2xl font-bold text-center mb-4 flex justify-center items-center gap-2">
+            💬 Chat LAN/Web
+        </h1>
+
+        <div id="messages" class="bg-gray-900 text-white rounded-xl h-[350px] overflow-y-auto p-3 mb-3 border border-gray-700"></div>
+
+        <form id="form" class="flex">
+            <input id="input" autocomplete="off"
+                placeholder="Nhập tin nhắn..."
+                class="flex-grow p-2 rounded-l-xl outline-none bg-gray-700 text-white placeholder-gray-400" />
+            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-r-xl transition">Gửi</button>
+        </form>
     </div>
-  </div>
+
+    <script>
+        const socket = io("http://192.168.2.8:8080"); // tự động kết nối tới server
+
+        const form = document.getElementById("form");
+        const input = document.getElementById("input");
+        const messages = document.getElementById("messages");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            if (input.value.trim() !== "") {
+                socket.send(input.value);
+                input.value = "";
+            }
+        });
+
+        socket.on("message", function (msg) {
+            const item = document.createElement("div");
+            item.textContent = msg;
+            item.classList = "p-2 my-1 bg-gray-700 rounded-lg";
+            messages.appendChild(item);
+            messages.scrollTop = messages.scrollHeight;
+        });
+    </script>
+
 </body>
 </html>
