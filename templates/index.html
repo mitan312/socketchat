@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>💬 Chat App</title>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="/static/script.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-900 text-white flex flex-col items-center h-screen justify-center">
+  <div class="bg-gray-800 rounded-xl shadow-2xl w-1/2 p-6">
+    <h1 class="text-3xl font-bold mb-4 text-center">💬 Chat LAN/Web</h1>
+    <div id="messages" class="h-80 overflow-y-auto border border-gray-700 rounded-lg p-3 bg-gray-900 mb-3"></div>
+    <div class="flex">
+      <input id="message" type="text" placeholder="Nhập tin nhắn..."
+             class="flex-grow p-2 rounded-l-lg text-black focus:outline-none" />
+      <button id="send" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-lg">Gửi</button>
+    </div>
+  </div>
+</body>
+</html>
