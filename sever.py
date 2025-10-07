@@ -16,6 +16,6 @@ def handle_message(msg):
     send(msg, broadcast=True)
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8080))
+    port = int(os.environ.get('PORT', 5000))
     print(f"✅ Server đang chạy tại http://localhost:{port}")
-    socketio.run(app, host='0.0.0.0', port=8080, allow_unsafe_werkzeug=True)
+    socketio.run(app, host='0.0.0.0', port=5000, allow_unsafe_werkzeug=True)
